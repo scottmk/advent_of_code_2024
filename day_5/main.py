@@ -1,6 +1,7 @@
 """https://adventofcode.com/2024/day/5"""
 
 from collections import defaultdict
+from functools import cmp_to_key
 from common_main_methods import read_text_file_lines
 
 
@@ -19,9 +20,10 @@ def parse_input(input_filepath):
     return rules, updates
 
 
-def determine_correct_updates(input_filepath):
+def determine_correct_updates(input_filepath, should_fix=False):
     rules, updates = parse_input(input_filepath)
     valid_updates = []
+    invalid_updates = []
     for update in updates:
         is_valid_update = True
         for update_idx, page_num in enumerate(update):
@@ -35,12 +37,32 @@ def determine_correct_updates(input_filepath):
                 break
         if is_valid_update:
             valid_updates.append(update)
+        else:
+            invalid_updates.append(update)
     
-    return sum([update[int(len(update)/2)] for update in valid_updates])
+    if should_fix:
+        fixed_update_sum = 0
+        for update in invalid_updates:
+            fixed_update = sorted(
+                update, 
+                key=cmp_to_key(lambda first, second: compare_pages(first, second, rules))
+            )
+            fixed_update_sum += fixed_update[int(len(update)/2)]
+            
+        return fixed_update_sum
+    else:
+        return sum([update[int(len(update)/2)] for update in valid_updates])
 
+
+def compare_pages(first, second, rules):
+    if second in rules[first]:
+        return -1
+    else:
+        return 1
 
 
 if __name__ == '__main__':
     input_filepath = './day_5/input.txt'
     print(f"Sum of middle page numbers in correct updates: {determine_correct_updates(input_filepath)}")
+    print(f"Sum of middle page numbers in corrected updates: {determine_correct_updates(input_filepath, should_fix=True)}")
     

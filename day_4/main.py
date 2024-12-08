@@ -4,11 +4,12 @@ from typing import Counter
 from common_main_methods import read_text_file_lines
 
 
-def count_xmas_occurences(input_filepath):
+def count_xmas_occurrences(input_filepath):
     word_search_lines = read_text_file_lines(input_filepath)
     num_lines = len(word_search_lines)
     possible_words = Counter()
     for row_idx, line in enumerate(word_search_lines):
+        line = line.strip()
         line_length = len(line)
         for col_idx, letter in enumerate(line):
             if letter != 'X':
@@ -71,4 +72,4 @@ def count_xmas_occurences(input_filepath):
 
 if __name__ == '__main__':
     input_filepath = './day_4/input.txt'
-    print(f"Number of XMAS in search: {count_xmas_occurences(input_filepath)}")
+    print(f"Number of XMAS in search: {count_xmas_occurrences(input_filepath)}")

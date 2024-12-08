@@ -1,7 +1,7 @@
 """https://adventofcode.com/2024/day/3"""
 
 import re
-from common_main_methods import read_text_file, read_text_file_lines
+from common_main_methods import read_text_file
 
 
 def get_fixed_mul_ops(input_filepath, with_conditionals=False):

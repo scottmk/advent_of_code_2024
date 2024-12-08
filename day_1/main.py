@@ -1,3 +1,6 @@
+"""https://adventofcode.com/2024/day/1"""
+
+from functools import reduce
 from typing import Counter
 from common_main_methods import read_text_file_lines
 
